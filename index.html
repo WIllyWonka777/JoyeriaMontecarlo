@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joyería Montecarlo · Anillos de Grado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--emerald:#0d3b32;--emerald-deep:#082621;--gold:#c8a04e;--gold-light:#e4cd8f;
+    --cream:#f7f3ea;--ink:#1c1b18;--muted:#7d7363;--line:rgba(200,160,78,.28)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Jost',sans-serif;color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased;cursor:pointer}
+  .filt{-webkit-tap-highlight-color:rgba(200,160,78,.3);touch-action:manipulation}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  .badge{position:fixed;right:14px;bottom:14px;z-index:50;display:flex;align-items:center;gap:8px;
+    background:rgba(8,38,33,.86);backdrop-filter:blur(6px);border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px 7px 8px;box-shadow:0 8px 24px -10px rgba(0,0,0,.5);text-decoration:none}
+  .badge img{width:30px;height:30px;object-fit:contain}
+  .badge span{font-family:'Cormorant Garamond',serif;color:var(--gold-light);font-size:15px;font-weight:600}
+  .wafloat{position:fixed;left:14px;bottom:14px;z-index:50;display:flex;align-items:center;gap:8px;
+    background:#25D366;border-radius:999px;padding:11px 18px;text-decoration:none;color:#fff;font-weight:600;
+    font-size:14px;box-shadow:0 8px 24px -8px rgba(37,211,102,.6)}
+  .wafloat svg{width:20px;height:20px;fill:#fff}
+  header.hero{background:radial-gradient(120% 90% at 50% -10%,rgba(200,160,78,.18),transparent 60%),
+      linear-gradient(160deg,var(--emerald),var(--emerald-deep));color:var(--cream);text-align:center;
+      padding:54px 24px 64px;position:relative;overflow:hidden}
+  header.hero::after{content:"";position:absolute;left:50%;bottom:0;transform:translateX(-50%);
+    width:min(640px,80%);height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+  .logo{width:148px;height:auto;margin:0 auto 14px;display:block;filter:drop-shadow(0 6px 18px rgba(0,0,0,.35))}
+  .brand{font-family:'Cormorant Garamond',serif;font-weight:600;letter-spacing:.5px;
+    font-size:clamp(34px,6vw,56px);line-height:1.02;color:var(--gold-light)}
+  .brand small{display:block;font-size:.34em;letter-spacing:.42em;text-transform:uppercase;
+    color:var(--cream);margin-top:10px;opacity:.85;font-family:'Jost',sans-serif;font-weight:400}
+  .kicker{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(19px,3.4vw,27px);
+    color:var(--cream);margin-top:26px;opacity:.92}
+  .sub{max-width:560px;margin:14px auto 0;font-weight:300;font-size:15.5px;line-height:1.7;color:rgba(247,243,234,.78)}
+  .herobtns{display:flex;gap:12px;justify-content:center;margin-top:28px;flex-wrap:wrap}
+  .btn{font-family:'Jost',sans-serif;font-size:13px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+    text-decoration:none;padding:12px 26px;border-radius:999px;transition:all .2s;cursor:pointer}
+  .btn-g{background:var(--gold);color:var(--emerald-deep)}
+  .btn-g:hover{background:var(--gold-light)}
+  .btn-o{border:1px solid var(--gold);color:var(--gold-light)}
+  .btn-o:hover{background:rgba(200,160,78,.14)}
+  .strip{background:var(--emerald-deep);color:var(--gold-light);text-align:center;font-weight:300;
+    letter-spacing:.28em;text-transform:uppercase;font-size:11.5px;padding:13px 16px}
+  .filters{position:sticky;top:0;z-index:20;background:rgba(247,243,234,.92);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);padding:14px 0}
+  .filters .row{display:flex;gap:9px;flex-wrap:wrap;justify-content:center}
+  .filt{font-size:13px;font-weight:500;letter-spacing:.04em;color:var(--emerald);background:transparent;
+    border:1px solid var(--line);padding:8px 18px;border-radius:999px;cursor:pointer;transition:all .2s}
+  .filt:hover{border-color:var(--gold);color:var(--gold)}
+  .filt.active{background:var(--emerald);color:var(--gold-light);border-color:var(--emerald)}
+  .section-head{text-align:center;margin:54px 0 30px}
+  .section-head .ey{font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);font-weight:500}
+  .section-head h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(28px,4.4vw,40px);color:var(--emerald);margin-top:6px}
+  .section-head .ln{width:60px;height:1px;background:var(--gold);margin:16px auto 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:26px;padding-bottom:30px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden;
+    transition:transform .28s,box-shadow .28s;display:flex;flex-direction:column}
+  .card:hover{transform:translateY(-5px);box-shadow:0 18px 40px -18px rgba(13,59,50,.45)}
+  .ph{aspect-ratio:1/1;background:radial-gradient(circle at 50% 38%,#fff,#f2ede1);
+    display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+  .ph img{width:100%;height:100%;object-fit:cover}
+  .tilebg{background:linear-gradient(150deg,var(--emerald),var(--emerald-deep))}
+  .tilemark{width:54%!important;height:54%!important;object-fit:contain!important;opacity:.9}
+  .emblem{width:46%;height:46%}
+  .tile .meta h3{color:var(--emerald)}
+  .meta{padding:16px 17px 19px;flex:1;display:flex;flex-direction:column}
+  .tag{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:7px}
+  .meta h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:21px;color:var(--emerald);line-height:1.1}
+  .meta p{font-size:13px;font-weight:300;color:var(--muted);line-height:1.55;margin-top:7px}
+  .empty{text-align:center;color:var(--muted);padding:60px 0;font-weight:300;display:none}
+  .custom{background:var(--emerald);color:var(--cream);border-radius:6px;padding:46px 38px;margin:20px 0 0}
+  .custom .ch{text-align:center;margin-bottom:30px}
+  .custom h3{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,34px);color:var(--gold-light);font-weight:600}
+  .custom .ci{max-width:560px;margin:12px auto 0;font-weight:300;line-height:1.7;font-size:15px;opacity:.85;text-align:center}
+  .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;margin-top:8px}
+  .opt{border:1px solid rgba(228,205,143,.3);border-radius:5px;padding:22px 22px 24px}
+  .opt .on{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600}
+  .opt h4{font-family:'Cormorant Garamond',serif;font-size:21px;color:var(--gold-light);font-weight:600;margin:6px 0 10px}
+  .opt ul{list-style:none}
+  .opt li{font-weight:300;font-size:14px;line-height:1.9;color:rgba(247,243,234,.86);padding-left:18px;position:relative}
+  .opt li::before{content:"";position:absolute;left:0;top:11px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+  .contact{display:grid;grid-template-columns:1.1fr 1fr;gap:34px;align-items:center;background:#fff;
+    border:1px solid var(--line);border-radius:6px;padding:40px;margin-top:20px}
+  .contact h3{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--emerald);font-weight:600}
+  .contact .row2{display:flex;align-items:flex-start;gap:13px;margin-top:18px}
+  .contact .ic{width:34px;height:34px;flex:none;border-radius:50%;background:var(--emerald);color:var(--gold-light);
+    display:flex;align-items:center;justify-content:center;font-size:15px}
+  .contact .row2 div{font-size:14.5px;line-height:1.5}
+  .contact .row2 b{display:block;font-weight:500;color:var(--ink);font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px}
+  .contact a{color:var(--emerald);text-decoration:none;border-bottom:1px solid var(--line)}
+  .contact .ctas{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap}
+  .ctaw{background:#25D366;color:#fff;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:500;font-size:13.5px}
+  .ctaf{background:#1877F2;color:#fff;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:500;font-size:13.5px}
+  .ctai{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:500;font-size:13.5px}
+  .disclaimer{max-width:760px;margin:6px auto 0;text-align:center;font-size:12.5px;font-weight:300;
+    line-height:1.6;color:var(--muted);border-top:1px solid var(--line);padding-top:18px}
+  .disclaimer b{color:var(--emerald);font-weight:500}
+  .map{background:linear-gradient(150deg,var(--emerald),var(--emerald-deep));border-radius:6px;padding:34px;text-align:center;color:var(--cream)}
+  .map img{width:80px;margin-bottom:10px}
+  .map .mt{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--gold-light);font-weight:600}
+  .map p{font-weight:300;margin-top:8px;line-height:1.7;font-size:14.5px;opacity:.85}
+  footer{background:var(--emerald-deep);color:var(--cream);margin-top:60px;padding:48px 24px 40px;text-align:center}
+  footer .logo{width:92px;margin-bottom:8px}
+  footer .fb{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gold-light);font-weight:600}
+  footer .info{margin-top:18px;font-weight:300;font-size:14.5px;line-height:1.9;color:rgba(247,243,234,.82)}
+  footer a{color:var(--gold-light);text-decoration:none;border-bottom:1px solid var(--line)}
+  footer .copy{margin-top:26px;font-size:11px;letter-spacing:.25em;text-transform:uppercase;opacity:.55}
+  footer .protect{margin-top:8px;font-size:11px;opacity:.4;font-weight:300}
+  @media(max-width:780px){.contact{grid-template-columns:1fr}}
+  @media(max-width:600px){.grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+    .meta{padding:13px 13px 16px}.meta h3{font-size:18px}.custom,.contact,.map{padding:28px 20px}}
+  @media print{.filters,.badge,.wafloat,.herobtns{display:none}.card{break-inside:avoid;box-shadow:none}.custom,.contact{break-inside:avoid}}
+</style>
+</head>
+<body>
+<script id="lg">addEventListener("DOMContentLoaded",function(){document.querySelectorAll('[data-logo]').forEach(function(e){e.src="img/logo.png"})});</script>
+
+<a class="badge" href="#contacto"><img data-logo="1" src="" alt=""><span>Montecarlo</span></a>
+<a class="wafloat" href="https://wa.me/593968005893?text=Hola%20Joyer%C3%ADa%20Montecarlo%2C%20vi%20el%20cat%C3%A1logo%20de%20anillos%20de%20grado%20y%20quisiera%20m%C3%A1s%20informaci%C3%B3n." target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.6.2-.2.3-.7.9-.8 1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.6-1.5-.8-2.1-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.3.3-1 .9-1 2.3s1 2.7 1.2 2.9c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .9.9-2.9-.2-.3A8 8 0 1 1 12 20z"/></svg>WhatsApp</a>
+
+<header class="hero">
+  <img class="logo" data-logo="1" src="" alt="Joyería Montecarlo">
+  <h1 class="brand">Montecarlo<small>Joyería · Tena, Ecuador</small></h1>
+  <p class="kicker">Anillos de Grado · Colección 2026</p>
+  <p class="sub">Piezas para celebrar logros que duran toda la vida. Cada anillo se personaliza con nombre, año, colegio, carrera y la piedra de tu elección.</p>
+  <div class="herobtns"><a class="btn btn-g" href="#catalogo">Ver catálogo</a><a class="btn btn-o" href="#contacto">Contáctanos</a></div>
+</header>
+
+<div class="strip">Oro · Plata 925 · Goldfilled · Grabado personalizado incluido</div>
+
+<nav class="filters"><div class="wrap row"><button class="filt active" data-cat="all">Todos</button><button class="filt" data-cat="damas">Damas</button><button class="filt" data-cat="caballeros">Caballeros</button><button class="filt" data-cat="oro">Oro</button><button class="filt" data-cat="plata">Plata</button><button class="filt" data-cat="carrera">Por Carrera</button><button class="filt" data-cat="especiales">Especiales</button><button class="filt" data-cat="parejas">Parejas / Boda</button></div></nav>
+
+<main class="wrap">
+  <div class="section-head" id="catalogo"><div class="ey">Catálogo</div><h2>Nuestra Colección</h2><div class="ln"></div></div>
+  <div class="grid" id="grid">
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p1.jpg" alt="Esmeralda Cojín Halo"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Esmeralda Cojín Halo</h3><p>Esmeralda corte cojín con halo de circones y corazones laterales · oro</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p2.jpg" alt="Esmeralda Solitario"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Esmeralda Solitario</h3><p>Esmeralda corte cojín con bandas grabadas y circones · oro amarillo</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p3.jpg" alt="Esmeralda Sello"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Esmeralda Sello</h3><p>Esmeralda ovalada en sello con escudo y carrera grabados · oro amarillo</p></div>
+      </article>
+      <article class="card" data-cat="carrera damas oro">
+        <div class="ph"><img loading="lazy" src="img/p4.jpg" alt="Derecho Banda"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Derecho Banda</h3><p>Banda con balanza de la justicia, rubíes y nombre grabado · oro</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p5.jpg" alt="Corona Zafiro"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Corona Zafiro</h3><p>Zafiro pera con corona de circones, nombre y año · oro</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p6.jpg" alt="Corona Esmeralda"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Corona Esmeralda</h3><p>Esmeralda pera con corona de circones y banda en V · oro</p></div>
+      </article>
+      <article class="card" data-cat="damas plata">
+        <div class="ph"><img loading="lazy" src="img/p7.jpg" alt="Zafiro Marquise Congrats"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Zafiro Marquise Congrats</h3><p>Zafiro marquise con hojas, nombre, año y 'Congratulations' · plata</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p8.jpg" alt="Corazón Lila"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Corazón Lila</h3><p>Corazón lila con nombre y acentos verdes · oro rosa</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p9.jpg" alt="Oval Halo"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Oval Halo</h3><p>Piedra oval con halo de circones, banda delicada · oro rosa</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p10.jpg" alt="Rubí Envuelto"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Rubí Envuelto</h3><p>Rubí pera envuelto con nombre, año y universidad · oro rosa</p></div>
+      </article>
+      <article class="card" data-cat="damas plata">
+        <div class="ph"><img loading="lazy" src="img/p11.jpg" alt="Solitario Universitario"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Solitario Universitario</h3><p>Circón celeste solitario con nombre, año y universidad · plata</p></div>
+      </article>
+      <article class="card" data-cat="carrera damas oro">
+        <div class="ph"><img loading="lazy" src="img/p12.jpg" alt="Medicina Sello"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Medicina Sello</h3><p>Sello de Medicina con caduceo y halo de circones · oro</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p13.jpg" alt="Sello Conmemorativo"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Sello Conmemorativo</h3><p>Sello con grabado de retrato y detalles · oro amarillo</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p14.jpg" alt="Sello Universitario Granate"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Sello Universitario Granate</h3><p>Sello con piedra granate y escudo de universidad · oro</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p15.jpg" alt="Oval Rosa Colegio"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Oval Rosa Colegio</h3><p>Piedra oval rosa con corazones, nombre, año y colegio · oro</p></div>
+      </article>
+      <article class="card" data-cat="damas plata">
+        <div class="ph"><img loading="lazy" src="img/p16.jpg" alt="Corazones Celeste"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Corazones Celeste</h3><p>Dos corazones celestes con Class Of y colegio · plata</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p17.jpg" alt="Corazón Amatista"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Corazón Amatista</h3><p>Corazón de amatista con nombre y año grabados · oro</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p18.jpg" alt="Solitario Cruzado"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Solitario Cruzado</h3><p>Circón solitario con banda cruzada, nombre y colegio · oro</p></div>
+      </article>
+      <article class="card" data-cat="damas plata">
+        <div class="ph"><img loading="lazy" src="img/p19.jpg" alt="Solitario Rosa"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Solitario Rosa</h3><p>Piedra rosa solitaria con grabado de nombre · plata</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p20.jpg" alt="Banda con Nombres"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Banda con Nombres</h3><p>Banda de oro con nombres y circones cuadrados grabados</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p21.jpg" alt="Banda Oro Rosa"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Banda Oro Rosa</h3><p>Banda de oro rosa con grabado de nombre y carrera</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p22.jpg" alt="Rubí Halo"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Rubí Halo</h3><p>Piedra marquise rubí con halo de circones · oro amarillo</p></div>
+      </article>
+      <article class="card" data-cat="damas plata">
+        <div class="ph"><img loading="lazy" src="img/p23.jpg" alt="Esmeralda Halo"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Esmeralda Halo</h3><p>Esmeralda corte cojín con halo · plata 925</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p24.jpg" alt="Cristal Rosa"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Cristal Rosa</h3><p>Cristal rosa corte cojín con año grabado · oro rosa</p></div>
+      </article>
+      <article class="card" data-cat="damas oro plata">
+        <div class="ph"><img loading="lazy" src="img/p25.jpg" alt="Doble Solitario"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Doble Solitario</h3><p>Dos circones solitarios · oro y plata</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p26.jpg" alt="Solitario Delicado"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Solitario Delicado</h3><p>Circón solitario engastado · oro blanco</p></div>
+      </article>
+      <article class="card" data-cat="damas oro plata">
+        <div class="ph"><img loading="lazy" src="img/p27.jpg" alt="Brillante Clásico"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Brillante Clásico</h3><p>Circón central con banda fina · oro y plata</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p28.jpg" alt="Corona Class 2019"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Corona Class 2019</h3><p>Corazón rosa con corona de circones · oro amarillo</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p29.jpg" alt="Zafiro Clásico"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Zafiro Clásico</h3><p>Zafiro azul con acentos · oro amarillo</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p30.jpg" alt="Amatista Vintage"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Amatista Vintage</h3><p>Amatista ovalada con grabado lateral · oro blanco</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p31.jpg" alt="Esmeralda Corazón"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Esmeralda Corazón</h3><p>Esmeralda con banda grabada · oro rosa</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p32.jpg" alt="Rubí Marquise"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Rubí Marquise</h3><p>Rubí marquise con nombres grabados · oro amarillo</p></div>
+      </article>
+      <article class="card" data-cat="damas oro plata">
+        <div class="ph"><img loading="lazy" src="img/p33.jpg" alt="Rubí Corazón"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Rubí Corazón</h3><p>Corazón rubí con halo · plata y oro</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p34.jpg" alt="Corazón Rosa"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Corazón Rosa</h3><p>Corazón rosa con banda de circones · oro blanco</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p35.jpg" alt="Amatista Doble Corazón"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Amatista Doble Corazón</h3><p>Dos corazones de amatista · oro amarillo</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p36.jpg" alt="Esmeralda Class"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Esmeralda Class</h3><p>Esmeralda con grabado Class Of · oro amarillo</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p37.jpg" alt="Corona Real"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Corona Real</h3><p>Diseño de corona con circones · oro amarillo</p></div>
+      </article>
+      <article class="card" data-cat="damas plata">
+        <div class="ph"><img loading="lazy" src="img/p38.jpg" alt="Zafiro Marquise"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Zafiro Marquise</h3><p>Zafiro marquise con halo floral · plata 925</p></div>
+      </article>
+      <article class="card" data-cat="damas oro plata">
+        <div class="ph"><img loading="lazy" src="img/p39.jpg" alt="Marquise Brillante"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Marquise Brillante</h3><p>Circón marquise con banda doble · oro y plata</p></div>
+      </article>
+      <article class="card" data-cat="damas plata">
+        <div class="ph"><img loading="lazy" src="img/p40.jpg" alt="Aguamarina 2015"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Aguamarina 2015</h3><p>Aguamarina marquise con año · plata 925</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p41.jpg" alt="Aguamarina Doble"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Aguamarina Doble</h3><p>Dos aguamarinas pera con nombres · oro blanco</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p42.jpg" alt="Amatista Pera"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Amatista Pera</h3><p>Amatista pera con corona de circones · oro</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p43.jpg" alt="Esmeralda Corazón Doble"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Esmeralda Corazón Doble</h3><p>Corazón esmeralda con banda envolvente · oro rosa</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p44.jpg" alt="Class Of 2023"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Class Of 2023</h3><p>Circón pera con dedicatoria grabada · oro amarillo</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p45.jpg" alt="So Proud Of You"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>So Proud Of You</h3><p>Amatista marquise con piedra de mes · oro rosa</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p46.jpg" alt="Salesianas Rosa"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Salesianas Rosa</h3><p>Cristal rosa con nombre de colegio · oro</p></div>
+      </article>
+      <article class="card" data-cat="damas oro plata">
+        <div class="ph"><img loading="lazy" src="img/p47.jpg" alt="Zafiro Infinito"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Zafiro Infinito</h3><p>Zafiro con banda infinito de circones · plata y oro</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p48.jpg" alt="Corazón Clásico"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Corazón Clásico</h3><p>Corazón con circón central y nombres · oro amarillo</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p49.jpg" alt="Prom Rosa"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Prom Rosa</h3><p>Cristal rosa con grabado Prom · oro rosa</p></div>
+      </article>
+      <article class="card" data-cat="damas plata">
+        <div class="ph"><img loading="lazy" src="img/p50.jpg" alt="Congratulations Rosa"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Congratulations Rosa</h3><p>Cristal rosa con nombre grabado · plata 925</p></div>
+      </article>
+      <article class="card" data-cat="damas oro">
+        <div class="ph"><img loading="lazy" src="img/p51.jpg" alt="Marquise Colegio"></div>
+        <div class="meta"><span class="tag">Damas</span><h3>Marquise Colegio</h3><p>Circón marquise con sigla de colegio · oro amarillo</p></div>
+      </article>
+      <article class="card" data-cat="caballeros oro">
+        <div class="ph"><img loading="lazy" src="img/p52.jpg" alt="Class 2024 Amatista"></div>
+        <div class="meta"><span class="tag">Caballeros</span><h3>Class 2024 Amatista</h3><p>Amatista corte cojín en sello negro con universidad y año · oro</p></div>
+      </article>
+      <article class="card" data-cat="caballeros oro">
+        <div class="ph"><img loading="lazy" src="img/p53.jpg" alt="Sello Universitario Negro"></div>
+        <div class="meta"><span class="tag">Caballeros</span><h3>Sello Universitario Negro</h3><p>Sello con escudo de universidad y año, acabado negro · oro</p></div>
+      </article>
+      <article class="card" data-cat="caballeros carrera oro">
+        <div class="ph"><img loading="lazy" src="img/p54.jpg" alt="Banda Baguette Azul"></div>
+        <div class="meta"><span class="tag">Caballeros</span><h3>Banda Baguette Azul</h3><p>Banda con baguette azul, nombre, año y carrera, acabado negro · oro</p></div>
+      </article>
+      <article class="card" data-cat="caballeros oro">
+        <div class="ph"><img loading="lazy" src="img/p55.jpg" alt="Banda Conmemorativa"></div>
+        <div class="meta"><span class="tag">Caballeros</span><h3>Banda Conmemorativa</h3><p>Banda con piedra azul, año y grabado interior · oro</p></div>
+      </article>
+      <article class="card" data-cat="caballeros">
+        <div class="ph"><img loading="lazy" src="img/p56.jpg" alt="Class 2024 Negro"></div>
+        <div class="meta"><span class="tag">Caballeros</span><h3>Class 2024 Negro</h3><p>Sello con birrete, diploma y año, acabado negro · grabado interior</p></div>
+      </article>
+      <article class="card" data-cat="caballeros plata">
+        <div class="ph"><img loading="lazy" src="img/p57.jpg" alt="Class 2018"></div>
+        <div class="meta"><span class="tag">Caballeros</span><h3>Class 2018</h3><p>Sello cuadrado con circones y nombre · plata</p></div>
+      </article>
+      <article class="card" data-cat="caballeros oro">
+        <div class="ph"><img loading="lazy" src="img/p58.jpg" alt="Zafiro Real"></div>
+        <div class="meta"><span class="tag">Caballeros</span><h3>Zafiro Real</h3><p>Zafiro corte cojín con halo · oro 18k</p></div>
+      </article>
+      <article class="card" data-cat="caballeros oro plata">
+        <div class="ph"><img loading="lazy" src="img/p59.jpg" alt="Inicial Sello"></div>
+        <div class="meta"><span class="tag">Caballeros</span><h3>Inicial Sello</h3><p>Inicial grabada en sello redondo · oro y plata</p></div>
+      </article>
+      <article class="card" data-cat="caballeros oro">
+        <div class="ph"><img loading="lazy" src="img/p60.jpg" alt="Inicial en Relieve"></div>
+        <div class="meta"><span class="tag">Caballeros</span><h3>Inicial en Relieve</h3><p>Inicial con acentos azules · oro amarillo</p></div>
+      </article>
+      <article class="card" data-cat="caballeros oro">
+        <div class="ph"><img loading="lazy" src="img/p61.jpg" alt="Iniciales Sello"></div>
+        <div class="meta"><span class="tag">Caballeros</span><h3>Iniciales Sello</h3><p>Sello con iniciales en relieve · oro amarillo</p></div>
+      </article>
+      <article class="card" data-cat="caballeros oro">
+        <div class="ph"><img loading="lazy" src="img/p62.jpg" alt="Sello Inicial Oro"></div>
+        <div class="meta"><span class="tag">Caballeros</span><h3>Sello Inicial Oro</h3><p>Sello con inicial y circones · oro</p></div>
+      </article>
+      <article class="card" data-cat="caballeros oro">
+        <div class="ph"><img loading="lazy" src="img/p63.jpg" alt="Sello Escudo"></div>
+        <div class="meta"><span class="tag">Caballeros</span><h3>Sello Escudo</h3><p>Sello con escudo de colegio · oro</p></div>
+      </article>
+      <article class="card" data-cat="caballeros oro">
+        <div class="ph"><img loading="lazy" src="img/p64.jpg" alt="Sello Clásico"></div>
+        <div class="meta"><span class="tag">Caballeros</span><h3>Sello Clásico</h3><p>Sello con inicial en relieve · oro amarillo</p></div>
+      </article>
+      <article class="card" data-cat="caballeros oro">
+        <div class="ph"><img loading="lazy" src="img/p65.jpg" alt="Sello Grabado"></div>
+        <div class="meta"><span class="tag">Caballeros</span><h3>Sello Grabado</h3><p>Sello macizo con grabado lateral · oro</p></div>
+      </article>
+      <article class="card" data-cat="caballeros oro">
+        <div class="ph"><img loading="lazy" src="img/p66.jpg" alt="Marco Rosa"></div>
+        <div class="meta"><span class="tag">Caballeros</span><h3>Marco Rosa</h3><p>Cristal rosa con marco de circones · oro rosa</p></div>
+      </article>
+      <article class="card" data-cat="caballeros oro">
+        <div class="ph"><img loading="lazy" src="img/p67.jpg" alt="Colegio Rosa"></div>
+        <div class="meta"><span class="tag">Caballeros</span><h3>Colegio Rosa</h3><p>Cristal rosa con sigla de colegio · oro rosa</p></div>
+      </article>
+      <article class="card" data-cat="caballeros plata">
+        <div class="ph"><img loading="lazy" src="img/p68.jpg" alt="Sello Plata 925"></div>
+        <div class="meta"><span class="tag">Caballeros</span><h3>Sello Plata 925</h3><p>Sello de hombre con grabado · plata 925</p></div>
+      </article>
+      <article class="card" data-cat="caballeros oro">
+        <div class="ph"><img loading="lazy" src="img/p69.jpg" alt="Ónix Sello"></div>
+        <div class="meta"><span class="tag">Caballeros</span><h3>Ónix Sello</h3><p>Sello con detalle negro y grabado · oro amarillo</p></div>
+      </article>
+      <article class="card" data-cat="oro">
+        <div class="ph"><img loading="lazy" src="img/p70.jpg" alt="Grado Oro 18k"></div>
+        <div class="meta"><span class="tag">Oro</span><h3>Grado Oro 18k</h3><p>Anillo de grado en oro 18 kilates · circón central</p></div>
+      </article>
+      <article class="card" data-cat="oro plata">
+        <div class="ph"><img loading="lazy" src="img/p71.jpg" alt="Grado Plata con Oro"></div>
+        <div class="meta"><span class="tag">Oro</span><h3>Grado Plata con Oro</h3><p>Anillo de grado plata con baño de oro</p></div>
+      </article>
+      <article class="card" data-cat="oro">
+        <div class="ph"><img loading="lazy" src="img/p72.jpg" alt="Grado Goldfilled"></div>
+        <div class="meta"><span class="tag">Oro</span><h3>Grado Goldfilled</h3><p>Anillo de grado goldfilled con corazón</p></div>
+      </article>
+      <article class="card" data-cat="oro">
+        <div class="ph"><img loading="lazy" src="img/p73.jpg" alt="Quinceañera 15"></div>
+        <div class="meta"><span class="tag">Oro</span><h3>Quinceañera 15</h3><p>Número 15 con corazón de circones · oro</p></div>
+      </article>
+      <article class="card" data-cat="oro plata">
+        <div class="ph"><img loading="lazy" src="img/p74.jpg" alt="Set Plata con Oro"></div>
+        <div class="meta"><span class="tag">Plata</span><h3>Set Plata con Oro</h3><p>Anillo de grado plata con detalles en oro</p></div>
+      </article>
+      <article class="card" data-cat="carrera especiales oro">
+        <div class="ph"><img loading="lazy" src="img/p75.jpg" alt="Caduceo Medicina"></div>
+        <div class="meta"><span class="tag">Especiales</span><h3>Caduceo Medicina</h3><p>Símbolo de medicina con esmeraldas · oro amarillo</p></div>
+      </article>
+      <article class="card" data-cat="parejas">
+        <div class="ph"><img loading="lazy" src="img/p76.jpg" alt="Corazones Zafiro"></div>
+        <div class="meta"><span class="tag">Parejas / Boda</span><h3>Corazones Zafiro</h3><p>Corazón zafiro compartido con grabado · oro y plata</p></div>
+      </article>
+      <article class="card" data-cat="parejas">
+        <div class="ph"><img loading="lazy" src="img/p77.jpg" alt="Corazón Infinito"></div>
+        <div class="meta"><span class="tag">Parejas / Boda</span><h3>Corazón Infinito</h3><p>Corazón con banda infinito · oro y plata</p></div>
+      </article>
+      <article class="card" data-cat="parejas">
+        <div class="ph"><img loading="lazy" src="img/p78.jpg" alt="Solitario Pareja"></div>
+        <div class="meta"><span class="tag">Parejas / Boda</span><h3>Solitario Pareja</h3><p>Solitario con dos nombres · oro tricolor</p></div>
+      </article>
+      <article class="card" data-cat="parejas">
+        <div class="ph"><img loading="lazy" src="img/p79.jpg" alt="Doble Corazón Amatista"></div>
+        <div class="meta"><span class="tag">Parejas / Boda</span><h3>Doble Corazón Amatista</h3><p>Dos corazones amatista con nombres · oro</p></div>
+      </article>
+      <article class="card" data-cat="parejas">
+        <div class="ph"><img loading="lazy" src="img/p80.jpg" alt="Corazón Zafiro 2018"></div>
+        <div class="meta"><span class="tag">Parejas / Boda</span><h3>Corazón Zafiro 2018</h3><p>Corazón zafiro con nombres grabados · plata 925</p></div>
+      </article>
+      <article class="card tile" data-cat="carrera">
+        <div class="ph tilebg"><svg class="emblem" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="var(--gold-light)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><line x1="50" y1="20" x2="50" y2="82"/><path d="M50 26c-10 6-10 14 0 20s10 14 0 20"/><path d="M50 26c10 6 10 14 0 20s-10 14 0 20"/><circle cx="50" cy="18" r="4" fill="var(--gold-light)" stroke="none"/><path d="M38 24c-6-3-9 2-6 6"/><path d="M62 24c6-3 9 2 6 6"/></g></svg></div>
+        <div class="meta"><span class="tag">Por Carrera</span><h3>Medicina</h3><p>Caduceo · vara de Esculapio · grabado en tu anillo</p></div>
+      </article>
+      <article class="card tile" data-cat="carrera">
+        <div class="ph tilebg"><svg class="emblem" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="var(--gold-light)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M30 34h40v34a8 8 0 0 1-8 8H38a8 8 0 0 1-8-8z"/><path d="M40 34c0-8 4-12 10-12s10 4 10 12"/><line x1="50" y1="46" x2="50" y2="62"/><line x1="42" y1="54" x2="58" y2="54"/></g></svg></div>
+        <div class="meta"><span class="tag">Por Carrera</span><h3>Enfermería</h3><p>Cruz y cuidado · grabado en tu anillo</p></div>
+      </article>
+      <article class="card tile" data-cat="carrera">
+        <div class="ph tilebg"><svg class="emblem" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="var(--gold-light)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 78h52"/><path d="M30 78V44l20-14 20 14v34"/><line x1="42" y1="78" x2="42" y2="58"/><line x1="58" y1="78" x2="58" y2="58"/><path d="M42 58h16"/></g></svg></div>
+        <div class="meta"><span class="tag">Por Carrera</span><h3>Ing. Civil</h3><p>Estructuras y planos · grabado en tu anillo</p></div>
+      </article>
+      <article class="card tile" data-cat="carrera">
+        <div class="ph tilebg"><svg class="emblem" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="var(--gold-light)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="50" cy="50" r="13"/><circle cx="50" cy="50" r="4"/><g stroke-width="3.4"><line x1="50" y1="29" x2="50" y2="22"/><line x1="50" y1="78" x2="50" y2="71"/><line x1="29" y1="50" x2="22" y2="50"/><line x1="78" y1="50" x2="71" y2="50"/><line x1="35" y1="35" x2="30" y2="30"/><line x1="70" y1="70" x2="65" y2="65"/><line x1="65" y1="35" x2="70" y2="30"/><line x1="30" y1="70" x2="35" y2="65"/></g></g></svg></div>
+        <div class="meta"><span class="tag">Por Carrera</span><h3>Ing. Industrial</h3><p>Engranaje y procesos · grabado en tu anillo</p></div>
+      </article>
+      <article class="card tile" data-cat="carrera">
+        <div class="ph tilebg"><svg class="emblem" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="var(--gold-light)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><rect x="24" y="30" width="52" height="38" rx="4"/><path d="M40 44l-6 5 6 5"/><path d="M60 44l6 5-6 5"/><line x1="54" y1="42" x2="46" y2="56"/><line x1="40" y1="78" x2="60" y2="78"/></g></svg></div>
+        <div class="meta"><span class="tag">Por Carrera</span><h3>Ing. en Sistemas</h3><p>Código y conexión · grabado en tu anillo</p></div>
+      </article>
+      <article class="card tile" data-cat="carrera">
+        <div class="ph tilebg"><svg class="emblem" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="var(--gold-light)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M58 30a10 10 0 0 0-13 13L28 60l8 8 17-17a10 10 0 0 0 13-13l-7 7-6-6z"/><circle cx="40" cy="64" r="2.5" fill="var(--gold-light)" stroke="none"/></g></svg></div>
+        <div class="meta"><span class="tag">Por Carrera</span><h3>Ing. Mecánica</h3><p>Engranajes y herramientas · grabado en tu anillo</p></div>
+      </article>
+      <article class="card tile" data-cat="carrera">
+        <div class="ph tilebg"><svg class="emblem" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="var(--gold-light)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M54 22L34 54h14l-4 24 22-34H52z" fill="var(--gold-light)" stroke="none" opacity=".92"/></g></svg></div>
+        <div class="meta"><span class="tag">Por Carrera</span><h3>Ing. Electrónica</h3><p>Circuito y energía · grabado en tu anillo</p></div>
+      </article>
+      <article class="card tile" data-cat="carrera">
+        <div class="ph tilebg"><svg class="emblem" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="var(--gold-light)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M50 78c0-22 8-34 24-38-2 22-10 34-24 38z"/><path d="M50 78c0-16-6-26-18-30 2 17 8 26 18 30z"/><line x1="50" y1="78" x2="50" y2="58"/></g></svg></div>
+        <div class="meta"><span class="tag">Por Carrera</span><h3>Ing. Ambiental</h3><p>Hoja y planeta · grabado en tu anillo</p></div>
+      </article>
+      <article class="card tile" data-cat="carrera">
+        <div class="ph tilebg"><svg class="emblem" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="var(--gold-light)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="50" y1="24" x2="50" y2="74"/><line x1="36" y1="74" x2="64" y2="74"/><line x1="30" y1="34" x2="70" y2="34"/><path d="M30 34l-8 16h16z"/><path d="M70 34l-8 16h16z"/><circle cx="50" cy="26" r="3" fill="var(--gold-light)" stroke="none"/></g></svg></div>
+        <div class="meta"><span class="tag">Por Carrera</span><h3>Derecho</h3><p>Balanza de la justicia · grabado en tu anillo</p></div>
+      </article>
+      <article class="card tile" data-cat="carrera">
+        <div class="ph tilebg"><svg class="emblem" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="var(--gold-light)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M40 26l-14 50"/><path d="M40 26l14 50"/><path d="M33 56h14"/><line x1="60" y1="30" x2="60" y2="72"/><path d="M60 30l8 8"/><path d="M60 72h12"/></g></svg></div>
+        <div class="meta"><span class="tag">Por Carrera</span><h3>Arquitectura</h3><p>Compás y regla · grabado en tu anillo</p></div>
+      </article>
+      <article class="card tile" data-cat="carrera">
+        <div class="ph tilebg"><svg class="emblem" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="var(--gold-light)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M50 28c-10-6-22-2-22 12 0 10 4 16 7 28 2 8 8 8 9-2l3-12c.6-2 3.4-2 4 0l3 12c1 10 7 10 9 2 3-12 7-18 7-28 0-14-12-18-22-12z"/></g></svg></div>
+        <div class="meta"><span class="tag">Por Carrera</span><h3>Odontología</h3><p>Diente y salud · grabado en tu anillo</p></div>
+      </article>
+      <article class="card tile" data-cat="carrera">
+        <div class="ph tilebg"><svg class="emblem" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="var(--gold-light)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><rect x="30" y="26" width="40" height="48" rx="4"/><line x1="38" y1="38" x2="62" y2="38"/><circle cx="40" cy="50" r="1.6" fill="var(--gold-light)" stroke="none"/><circle cx="50" cy="50" r="1.6" fill="var(--gold-light)" stroke="none"/><circle cx="60" cy="50" r="1.6" fill="var(--gold-light)" stroke="none"/><circle cx="40" cy="62" r="1.6" fill="var(--gold-light)" stroke="none"/><circle cx="50" cy="62" r="1.6" fill="var(--gold-light)" stroke="none"/><circle cx="60" cy="62" r="1.6" fill="var(--gold-light)" stroke="none"/></g></svg></div>
+        <div class="meta"><span class="tag">Por Carrera</span><h3>Contabilidad</h3><p>Cuentas y finanzas · grabado en tu anillo</p></div>
+      </article>
+      <article class="card tile" data-cat="carrera">
+        <div class="ph tilebg"><svg class="emblem" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="var(--gold-light)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><rect x="34" y="38" width="32" height="36" rx="3"/><path d="M42 38v-6a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v6"/><line x1="34" y1="54" x2="66" y2="54"/></g></svg></div>
+        <div class="meta"><span class="tag">Por Carrera</span><h3>Administración</h3><p>Gestión y negocios · grabado en tu anillo</p></div>
+      </article>
+      <article class="card tile" data-cat="carrera">
+        <div class="ph tilebg"><svg class="emblem" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="var(--gold-light)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="50" cy="60" rx="11" ry="9"/><circle cx="36" cy="44" r="5"/><circle cx="64" cy="44" r="5"/><circle cx="43" cy="34" r="4.5"/><circle cx="57" cy="34" r="4.5"/></g></svg></div>
+        <div class="meta"><span class="tag">Por Carrera</span><h3>Veterinaria</h3><p>Patita y cuidado animal · grabado en tu anillo</p></div>
+      </article>
+      <article class="card tile" data-cat="carrera">
+        <div class="ph tilebg"><svg class="emblem" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="var(--gold-light)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M62 40c-2-10-12-16-22-12-8 3-12 12-9 21 1 4 0 6-2 9-2 3 0 6 4 6h4v6a4 4 0 0 0 8 0v-2"/><path d="M50 40v22"/></g></svg></div>
+        <div class="meta"><span class="tag">Por Carrera</span><h3>Psicología</h3><p>Mente y bienestar · grabado en tu anillo</p></div>
+      </article>
+      <article class="card tile" data-cat="carrera">
+        <div class="ph tilebg"><svg class="emblem" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="var(--gold-light)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 44l28-12 28 12-28 12z"/><path d="M36 50v14c0 4 28 4 28 0V50"/><line x1="78" y1="44" x2="78" y2="60"/></g></svg></div>
+        <div class="meta"><span class="tag">Por Carrera</span><h3>Educación</h3><p>Birrete y enseñanza · grabado en tu anillo</p></div>
+      </article>
+      <article class="card tile" data-cat="carrera">
+        <div class="ph tilebg"><svg class="emblem" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="var(--gold-light)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M36 50a10 10 0 0 1 0-20c2-6 24-6 26 0a10 10 0 0 1 0 20z"/><path d="M37 50l-1 22a3 3 0 0 0 3 3h22a3 3 0 0 0 3-3l-1-22"/></g></svg></div>
+        <div class="meta"><span class="tag">Por Carrera</span><h3>Gastronomía</h3><p>Toque y cocina · grabado en tu anillo</p></div>
+      </article>
+      <article class="card tile" data-cat="carrera">
+        <div class="ph tilebg"><svg class="emblem" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="var(--gold-light)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M30 44v12h8l14 12V32L38 44z"/><path d="M62 40a14 14 0 0 1 0 20"/><path d="M68 34a22 22 0 0 1 0 32"/></g></svg></div>
+        <div class="meta"><span class="tag">Por Carrera</span><h3>Comunicación</h3><p>Voz y medios · grabado en tu anillo</p></div>
+      </article>
+      <article class="card tile" data-cat="caballeros">
+        <div class="ph tilebg"><img class="tilemark" data-logo="1" src="" alt=""></div>
+        <div class="meta"><span class="tag">Caballeros · Personalizado</span><h3>Sello con Inicial</h3><p>Una o varias iniciales en relieve</p></div>
+      </article>
+      <article class="card tile" data-cat="caballeros">
+        <div class="ph tilebg"><img class="tilemark" data-logo="1" src="" alt=""></div>
+        <div class="meta"><span class="tag">Caballeros · Personalizado</span><h3>Sello con Escudo</h3><p>Escudo de tu colegio o universidad</p></div>
+      </article>
+      <article class="card tile" data-cat="caballeros">
+        <div class="ph tilebg"><img class="tilemark" data-logo="1" src="" alt=""></div>
+        <div class="meta"><span class="tag">Caballeros · Personalizado</span><h3>Sello Ónix</h3><p>Detalle negro con grabado dorado</p></div>
+      </article>
+      <article class="card tile" data-cat="oro">
+        <div class="ph tilebg"><img class="tilemark" data-logo="1" src="" alt=""></div>
+        <div class="meta"><span class="tag">Oro · Personalizado</span><h3>Oro 18k a Medida</h3><p>Cualquier modelo en oro amarillo</p></div>
+      </article>
+      <article class="card tile" data-cat="oro">
+        <div class="ph tilebg"><img class="tilemark" data-logo="1" src="" alt=""></div>
+        <div class="meta"><span class="tag">Oro · Personalizado</span><h3>Oro Rosa</h3><p>Acabado cálido para cualquier diseño</p></div>
+      </article>
+      <article class="card tile" data-cat="oro">
+        <div class="ph tilebg"><img class="tilemark" data-logo="1" src="" alt=""></div>
+        <div class="meta"><span class="tag">Oro · Personalizado</span><h3>Oro Blanco</h3><p>Terminado en rodio brillante</p></div>
+      </article>
+      <article class="card tile" data-cat="plata">
+        <div class="ph tilebg"><img class="tilemark" data-logo="1" src="" alt=""></div>
+        <div class="meta"><span class="tag">Plata · Personalizado</span><h3>Plata 925 Certificada</h3><p>Cualquier diseño del catálogo en plata de ley</p></div>
+      </article>
+      <article class="card tile" data-cat="plata">
+        <div class="ph tilebg"><img class="tilemark" data-logo="1" src="" alt=""></div>
+        <div class="meta"><span class="tag">Plata · Personalizado</span><h3>Plata con Baño de Oro</h3><p>Acabado dorado sobre plata 925</p></div>
+      </article>
+      <article class="card tile" data-cat="plata">
+        <div class="ph tilebg"><img class="tilemark" data-logo="1" src="" alt=""></div>
+        <div class="meta"><span class="tag">Plata · Personalizado</span><h3>Sello en Plata</h3><p>Iniciales y escudos en plata 925</p></div>
+      </article>
+      <article class="card tile" data-cat="plata">
+        <div class="ph tilebg"><img class="tilemark" data-logo="1" src="" alt=""></div>
+        <div class="meta"><span class="tag">Plata · Personalizado</span><h3>Solitario en Plata</h3><p>Circón o piedra de color sobre plata</p></div>
+      </article>
+      <article class="card tile" data-cat="parejas">
+        <div class="ph tilebg"><img class="tilemark" data-logo="1" src="" alt=""></div>
+        <div class="meta"><span class="tag">Parejas / Boda · Personalizado</span><h3>Argollas de Matrimonio</h3><p>Bandas a juego en oro o plata</p></div>
+      </article>
+      <article class="card tile" data-cat="parejas">
+        <div class="ph tilebg"><img class="tilemark" data-logo="1" src="" alt=""></div>
+        <div class="meta"><span class="tag">Parejas / Boda · Personalizado</span><h3>Aniversario</h3><p>Diseño conmemorativo con sus nombres</p></div>
+      </article>
+      <article class="card tile" data-cat="parejas">
+        <div class="ph tilebg"><img class="tilemark" data-logo="1" src="" alt=""></div>
+        <div class="meta"><span class="tag">Parejas / Boda · Personalizado</span><h3>Compromiso</h3><p>Solitario con la piedra que elijan</p></div>
+      </article>
+  </div>
+  <p class="empty" id="empty">No hay piezas en esta categoría.</p>
+  <p class="disclaimer"><b>Nota:</b> Las fotos son referenciales y muestran ejemplos de diseños. Cada anillo se elabora a pedido y de forma artesanal, por lo que el resultado final puede variar ligeramente en tono, acabado o detalles. Escríbenos para confirmar materiales, piedras y precios de tu pieza.</p>
+
+  <div class="section-head"><div class="ey">Hecho para ti</div><h2>Personaliza tu Anillo</h2><div class="ln"></div></div>
+  <div class="custom">
+    <div class="ch"><h3>Cualquier diseño, a tu manera</h3>
+      <p class="ci">Todos nuestros anillos se hacen a pedido. Elige cada detalle y creamos una pieza única para ti.</p></div>
+    <div class="opts">
+      <div class="opt"><div class="on">Material</div><h4>El metal</h4><ul><li>Oro 18k y 14k</li><li>Plata de ley 925</li><li>Goldfilled</li></ul></div>
+      <div class="opt"><div class="on">Baño</div><h4>El acabado</h4><ul><li>Oro amarillo</li><li>Oro rosa</li><li>Oro blanco / rodio</li></ul></div>
+      <div class="opt"><div class="on">Piedra</div><h4>La gema</h4><ul><li>Circón, rubí, zafiro</li><li>Esmeralda, amatista</li><li>Piedra de tu mes</li></ul></div>
+      <div class="opt"><div class="on">Grabado</div><h4>Tu historia</h4><ul><li>Nombre, año y carrera</li><li>Colegio o escudo</li><li>Inscripción interior</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-head" id="contacto"><div class="ey">Visítanos</div><h2>Contacto</h2><div class="ln"></div></div>
+  <div class="contact">
+    <div>
+      <h3>Joyería Montecarlo</h3>
+      <div class="row2"><div class="ic">&#10022;</div><div><b>Dirección</b>Av. 15 de Noviembre y 12 de Febrero<br>150150 Tena, Napo · Ecuador</div></div>
+      <div class="row2"><div class="ic">&#9742;</div><div><b>Teléfonos</b><a href="tel:+593968005893">+593 96 800 5893</a><br><a href="tel:+593987788166">+593 98 778 8166</a></div></div>
+      <div class="ctas"><a class="ctaw" href="https://wa.me/593968005893?text=Hola%20Joyer%C3%ADa%20Montecarlo%2C%20vi%20el%20cat%C3%A1logo%20de%20anillos%20de%20grado%20y%20quisiera%20m%C3%A1s%20informaci%C3%B3n." target="_blank" rel="noopener">WhatsApp</a>
+        <a class="ctai" href="https://www.instagram.com/joyeriamontecarlotena/" target="_blank" rel="noopener">Instagram</a>
+        <a class="ctaf" href="https://www.facebook.com/joyeriamontecarlotena" target="_blank" rel="noopener">Facebook</a></div>
+    </div>
+    <div class="map"><img data-logo="1" src="" alt=""><div class="mt">Te esperamos</div>
+      <p>En el corazón de Tena. Escríbenos por WhatsApp o Facebook para precios, tallas y pedidos personalizados.</p>
+      <a class="btn btn-o" style="margin-top:18px;display:inline-block" href="https://www.google.com/maps/search/?api=1&query=Joyer%C3%ADa+Montecarlo+Tena" target="_blank" rel="noopener">Ver en el mapa</a></div>
+  </div>
+</main>
+
+<footer>
+  <img class="logo" data-logo="1" src="" alt="">
+  <div class="fb">Joyería Montecarlo</div>
+  <div class="info">Av. 15 de Noviembre y 12 de Febrero · 150150 Tena, Ecuador<br>
+    WhatsApp <a href="https://wa.me/593968005893" target="_blank" rel="noopener">+593 96 800 5893</a> · <a href="https://wa.me/593987788166" target="_blank" rel="noopener">+593 98 778 8166</a><br>
+    <a href="https://www.instagram.com/joyeriamontecarlotena/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.facebook.com/joyeriamontecarlotena" target="_blank" rel="noopener">Facebook</a></div>
+  <div class="copy">Joyería Montecarlo · Hecho con orgullo en Ecuador</div>
+  <div class="protect">Imágenes referenciales. Diseños propiedad de Joyería Montecarlo. El producto final puede variar por ser elaborado a pedido.</div>
+</footer>
+
+<script>
+  function applyFilter(b){
+    if(!b)return;
+    var btns=document.querySelectorAll('.filt');
+    for(var i=0;i<btns.length;i++){btns[i].classList.remove('active');}
+    b.classList.add('active');
+    var c=b.getAttribute('data-cat'),s=0;
+    var cards=document.querySelectorAll('.card');
+    for(var j=0;j<cards.length;j++){
+      var card=cards[j];
+      var tags=(card.getAttribute('data-cat')||'').split(' ');
+      var m=c==='all'||tags.indexOf(c)>-1;
+      card.style.display=m?'flex':'none';if(m)s++;
+    }
+    var empty=document.getElementById('empty');
+    if(empty)empty.style.display=s?'none':'block';
+    var cat=document.getElementById('catalogo');
+    if(cat&&cat.scrollIntoView)cat.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  function wireFilters(){
+    var btns=document.querySelectorAll('.filt');
+    for(var i=0;i<btns.length;i++){
+      (function(b){
+        b.addEventListener('click',function(){applyFilter(b);},false);
+        b.addEventListener('touchend',function(e){e.preventDefault();applyFilter(b);},false);
+      })(btns[i]);
+    }
+    var ph=document.querySelectorAll('.ph img');
+    for(var k=0;k<ph.length;k++){
+      ph[k].addEventListener('contextmenu',function(e){e.preventDefault();},false);
+    }
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',wireFilters,false);
+  }else{
+    wireFilters();
+  }
+</script>
+</body>
+</html>
